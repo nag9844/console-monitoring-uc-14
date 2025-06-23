@@ -165,18 +165,6 @@ resource "aws_cloudtrail" "main" {
   is_multi_region_trail        = var.multi_region_trail
   enable_log_file_validation   = true
 
-  # Event selectors for management events
-  event_selector {
-    read_write_type                 = "All"
-    include_management_events       = true
-    exclude_management_event_sources = []
-
-    data_resource {
-      type   = "AWS::S3::Object"
-      values = ["arn:aws:s3:::*/*"]
-    }
-  }
-
   tags = merge(var.common_tags, {
     Name        = "${var.project_name}-cloudtrail"
     Description = "CloudTrail for monitoring AWS console login events"
